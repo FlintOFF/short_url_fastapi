@@ -19,6 +19,10 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+def increment_redirect_count(db: Session, redirect: models.Redirect):
+    redirect.redirect_count = models.Redirect.redirect_count + 1
+    db.commit()
+
 def get_redirects(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Redirect).offset(skip).limit(limit).all()
 

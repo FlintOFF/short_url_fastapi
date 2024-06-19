@@ -48,5 +48,5 @@ def read_item(short_str: str, db: Session = Depends(get_db)):
     if not redirect:
         raise HTTPException(status_code=404, detail="Redirect not found")
     else:
-        # TODO: increase redirect_count
-        return RedirectResponse("https://google.com/")    
+        crud.increment_redirect_count(db=db, redirect=redirect)
+        return RedirectResponse(redirect.url)    
