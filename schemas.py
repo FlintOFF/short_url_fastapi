@@ -1,15 +1,8 @@
 from typing import Union
 from pydantic import BaseModel, Field, HttpUrl
-import random
-import string
-
-def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
 
 class RedirectBase(BaseModel):
-    short_str: str = Field(default_factory=id_generator)
     url: str # TODO: HttpUrl
-    redirect_count: int = 0
 
 class RedirectCreate(RedirectBase):
     pass
@@ -17,6 +10,8 @@ class RedirectCreate(RedirectBase):
 class Redirect(RedirectBase):
     id: int
     owner_id: int
+    short_str: str
+    redirect_count: int
 
     class Config:
         orm_mode = True
