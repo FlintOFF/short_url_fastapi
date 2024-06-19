@@ -1,8 +1,11 @@
 from typing import Union
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl, field_serializer
 
 class RedirectBase(BaseModel):
-    url: str # TODO: HttpUrl
+    url: HttpUrl
+    @field_serializer('url')
+    def serialize_url(self, url: HttpUrl, _info):
+        return str(url)
 
 class RedirectCreate(RedirectBase):
     pass
